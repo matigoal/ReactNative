@@ -150,13 +150,14 @@ const App: React.FC = () => {
         {articles.map((article) => {
           return(
           <View>
-            <Text >bob</Text>
+           
             <Text >{article.price}</Text>
             <Text>{article.localization}</Text>
             <Text>{article.categorie}</Text>
             <Text>{article.image}</Text>
             <Text>{article.comment}</Text>
           </View>)
+          
         })}
 
         <Button title='List of Spend' onPress={(e) => console.log('All')} />
