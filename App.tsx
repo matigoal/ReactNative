@@ -1,211 +1,171 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
   Button,
   StyleSheet,
   // AsyncStorage,
-  TouchableOpacity,
+  Text,
+ 
 } from "react-native";
-
-
+import { IArticle } from './models/Article';
 
 interface IState {
-  
-  price: number;
-  localization: string;
-  categories: string;
-  image: JSX.Element;
-  comments: string;
+  article: IArticle;
+  articles: Array<IArticle>;
 }
 
 // App main  component
-export default class App extends React.Component<IState> {
-  state:any ;
-  constructor(props: any) {
-    super(props);
-    
-    this.state = {
-    
-      price: 0,
-      localization: "",
-      categories: "",
-      image: <div></div>,
-      comments: "",
-    };
-    
-  }
- 
+const App: React.FC = () => {
+  const [price, setPrice] = useState<string>('');
+  const [localization, setLocalization] = useState<string>('');
+  const [categorie, setCategorie] = useState<string>('');
+  const [image, setImage] = useState<string>('');
+  const [comment, setComment] = useState<string>('');
+  let [articles, setArticles] = useState<Array<IArticle>>([]);
 
- 
-// Date
-  componentDidMount() {
-    let that = this;
-    let date = new Date().getDate(); //Current Date
-    let month = new Date().getMonth() + 1; //Current Month
-    let year = new Date().getFullYear(); //Current Year
-    let hours = new Date().getHours(); //Current Hours
-    let min = new Date().getMinutes(); //Current Minutes
-    let sec = new Date().getSeconds(); //Current Seconds
-    that.setState({
-      //Setting the value of the date time
-      date:
-        date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-    });
+  let id = 0;
+
+  const submit = () => {
+    const newArticle: IArticle = { id: id++, price, localization, categorie, image, comment };
+    articles = [...articles, newArticle]
+    setArticles(articles);
+    setPrice('');
+    setLocalization('');
+    setCategorie('');
+    setImage('');
+    setComment('');
+    console.log(articles);
   }
 
-  submit = (e:any) =>{
-    console.log(this.state );
-    console.warn (this.state.date) ;
-  
-
-   
-   }
-  displayCommand = (e:any) =>{
-   
-  //  let initialArr = [this.state];
-  //  let buttonsListArr = [];
-  //   for (let i = 0; i < initialArr.length; i++) 
-  //   {
-  //    buttonsListArr.push(
-  //      <TouchableOpacity  onPress={this.submit.bind(this)}>{initialArr[i][1]}</TouchableOpacity>
-  //    );
-  //   }
-  // //   let result = this.state;
-  // //  console.log(result);
+  const handleDelete = (id: number) => {
+    articles = [...articles.filter(a => a.id !== id)]
+    setArticles(articles)
+    console.log(articles);
   }
 
-  render() {
+  const handleList = ()=> {
     
-    return (
-      <View style={styles.container}>
+  }
+
+  return (
+    <View style={styles.container}>
+      <div
+        style={{
+          backgroundColor: "#0085D6",
+          textAlign: "center",
+          justifyContent: "center",
+        }}
+        className="container"
+      >
+        <h1> Spend App</h1>
+        <p style={{ marginTop: "5%" }}>Welcome to App for list your spend.</p>
+        <div style={{ marginTop: "10%" }}>
+
+          <TextInput
+            placeholder="Price"
+            underlineColorAndroid='transparent'
+            style={styles.input}
+            keyboardType={'numeric'}
+            onChangeText={(text) => setPrice(text)}
+            value={price}
+          />
+
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="localization"
+            placeholderTextColor="#FFFFF0"
+            autoCapitalize="none"
+            onChangeText={(text) => {
+              setLocalization(text);
+            }}
+            value={localization}
+          />
+
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Categories"
+            placeholderTextColor="#FFFFF0"
+            autoCapitalize="none"
+            onChangeText={(text) => {
+              setCategorie(text);
+            }}
+            value={categorie}
+          />
+
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Picture"
+            placeholderTextColor="#FFFFF0"
+            autoCapitalize="none"
+            onChangeText={(text) => {
+              setImage(text);
+            }}
+            value={image}
+
+          />
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Comments"
+            placeholderTextColor="#FFFFF0"
+            autoCapitalize="none"
+            onChangeText={(text) => {
+              setComment(text);
+            }}
+            value={comment}
+          />
+          <Button title='Submit' onPress={
+            () => { submit() }
+          } />
+
+        </div>
+
         <div
           style={{
-            backgroundColor: "#0085D6",
             textAlign: "center",
-            justifyContent: "center",
+            width: "100px",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
-          className="container"
         >
-          <h1> Spend App</h1>
-          <p style={{ marginTop: "5%" }}>Welcome to App for list your spend.</p>
-          <div style={{ marginTop: "10%" }}>
-            {/* <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="JJ/MM/YYYY"
-              placeholderTextColor="#FFFFF0"
-              autoCapitalize="none"
-              onChangeText={(Date)=>{this.setState({date: new Date.toLocaleDateString('en-CA')})
-
-                
-              }}
-              
-            /> */}
-           <TextInput  
-          placeholder="Price"  
-          underlineColorAndroid='transparent'  
-          style={styles.input}  
-keyboardType={'numeric'}
-onChangeText={(number)=>{this.setState({price: number})}}
-/>  
-            
-            {/* <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="Price"
-              placeholderTextColor="#FFFFF0"
-              autoCapitalize="none"
-              onChangeText={(text)=>{this.setState({price: text})
-
-                
-            }}
-            /> */}
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="localization"
-              placeholderTextColor="#FFFFF0"
-              autoCapitalize="none"
-              onChangeText={(text)=>{this.setState({localization: text})
-
-                
-            }}
-            />
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="Categories"
-              placeholderTextColor="#FFFFF0"
-              autoCapitalize="none"
-              onChangeText={(text)=>{this.setState({categories: text})
-
-                
-              }}
-            />
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="Picture"
-              placeholderTextColor="#FFFFF0"
-              autoCapitalize="none"
-              onChangeText={(image)=>{this.setState({picture: image})
-
-                
-            }}
-            />
-            <TextInput
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              placeholder="Comments"
-              placeholderTextColor="#FFFFF0"
-              autoCapitalize="none"
-              onChangeText={(text)=>{this.setState({comments: text})
-
-                
-            }}
-            />
-          
-            <Button title='Submit'  onPress = {
-            (e)=> {this.submit(e)}
-              }/>
-          </div>
-
-          <div
-            style={{
-              textAlign: "center",
-              width: "100px",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <Button
-              title="Edit"
-              color="#D6CD00"
-              accessibilityLabel="Learn more about this yellow button"
-              onPress={() => this.setState({ title: "Todo bem" })}
-            />
-            <Button
-              title="Delete"
-              color="#d63600"
-              accessibilityLabel="Learn more about this red button"
-              onPress={() => this.setState({ title: "Todo bem" })}
-            />
-          </div>
-         <h1>List of Spend</h1>
-         
-        
-          <Button  title = 'List of Spend' onPress= {(e)=> {this.displayCommand(e)}}/>
-         
-            
-          <p id='lol'>
-
-          </p>
+          <Button
+            title="Edit"
+            color="#D6CD00"
+            accessibilityLabel="Learn more about this yellow button"
+            onPress={() => console.log('Edit')}
+          />
+          {/* <Button
+            title="Delete"
+            color="#d63600"
+            accessibilityLabel="Learn more about this red button"
+            onPress={() => {handleDelete()}
+          /> */}
         </div>
-      </View>
-    );
-  }
+        <h1>List of Spend</h1>
+
+        {articles.map((article) => {
+          <View>
+            <Text >bob</Text>
+            <Text >{article.price}</Text>
+            <Text>{article.localization}</Text>
+            <Text>{article.categorie}</Text>
+            <Text>{article.image}</Text>
+            <Text>{article.comment}</Text>
+          </View>
+        })}
+
+        <Button title='List of Spend' onPress={(e) => console.log('All')} />
+        <p id='lol'>
+        </p>
+      </div>
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: 23,
@@ -227,3 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default App;
