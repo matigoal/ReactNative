@@ -148,6 +148,7 @@ const App: React.FC = () => {
         <h1>List of Spend</h1>
 
         {articles.map((article) => {
+          return(
           <View>
             <Text >bob</Text>
             <Text >{article.price}</Text>
@@ -155,7 +156,7 @@ const App: React.FC = () => {
             <Text>{article.categorie}</Text>
             <Text>{article.image}</Text>
             <Text>{article.comment}</Text>
-          </View>
+          </View>)
         })}
 
         <Button title='List of Spend' onPress={(e) => console.log('All')} />
