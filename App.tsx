@@ -40,13 +40,13 @@ export default class App extends React.Component<IState> {
  
 // Date
   componentDidMount() {
-    var that = this;
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    var sec = new Date().getSeconds(); //Current Seconds
+    let that = this;
+    let date = new Date().getDate(); //Current Date
+    let month = new Date().getMonth() + 1; //Current Month
+    let year = new Date().getFullYear(); //Current Year
+    let hours = new Date().getHours(); //Current Hours
+    let min = new Date().getMinutes(); //Current Minutes
+    let sec = new Date().getSeconds(); //Current Seconds
     that.setState({
       //Setting the value of the date time
       date:
